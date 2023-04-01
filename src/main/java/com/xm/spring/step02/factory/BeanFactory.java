@@ -1,10 +1,5 @@
 package com.xm.spring.step02.factory;
 
-import com.xm.spring.step01.framework.BeanDefinition;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * @description:
  * @author: 小明长高高

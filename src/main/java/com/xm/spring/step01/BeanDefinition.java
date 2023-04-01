@@ -1,4 +1,4 @@
-package com.xm.spring.step01.framework;
+package com.xm.spring.step01;
 
 /**
  * @ClassName BeanDefinition

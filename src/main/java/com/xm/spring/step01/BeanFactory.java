@@ -1,4 +1,4 @@
-package com.xm.spring.step01.framework;
+package com.xm.spring.step01;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

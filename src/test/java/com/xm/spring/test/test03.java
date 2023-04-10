@@ -12,7 +12,7 @@ import org.junit.Test;
  **/
 public class test03 {
     @Test
-    public void test03(){
+    public void test(){
         DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
         defaultListableBeanFactory.registerBeanDefinition("userService",new BeanDefinition(UserService.class));
         UserService userService = (UserService)defaultListableBeanFactory.getBean("userService", 23);

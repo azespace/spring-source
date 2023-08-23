@@ -13,11 +13,18 @@ import java.util.Map;
  **/
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry {
     private Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
-    //职责分明 继承了抽象类，实现需要实现的方法 这里是注册和获取BeanDefinition
+
+    /**
+     * 职责分明 继承了抽象类，实现需要实现的方法 这里是注册和获取BeanDefinition
+     * @param beanName
+     * @return
+     */
     @Override
     protected BeanDefinition getBeanDefinition(String beanName) {
         BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
-        if (beanDefinition == null) throw new BeanException("No bean named"+beanName+"is defined");
+        if (beanDefinition == null) {
+            throw new BeanException("No bean named"+beanName+"is defined");
+        }
         return beanDefinitionMap.get(beanName);
     }
 

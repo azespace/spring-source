@@ -6,7 +6,9 @@ package com.xm.spring.step04.factory.config;
  * @date: 2023/4/1 15:10
  **/
 public class BeanReference {
-    //如果是类的属性是引用类型则用到这个类
+    /**
+     * 如果是类的属性是引用类型则用到这个类
+     */
     private String beanName;
     public BeanReference(String beanName){
         this.beanName = beanName;

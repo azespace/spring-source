@@ -15,7 +15,9 @@ import java.lang.reflect.Constructor;
  * @date: 2023/3/27 22:54
  **/
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
-    //创建bean并且加入单例容器后返回该对象 再抽象一层 单一职责
+    /**
+     * 创建bean并且加入单例容器后返回该对象 再抽象一层 单一职责
+     */
     private InstantiationStrategy instantiationStrategy = new CglibInstantiationStrategy();
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition) {

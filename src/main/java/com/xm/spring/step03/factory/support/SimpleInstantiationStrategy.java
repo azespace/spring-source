@@ -12,8 +12,15 @@ import java.lang.reflect.InvocationTargetException;
  * @date: 2023/4/1 13:04
  **/
 public class SimpleInstantiationStrategy implements  InstantiationStrategy{
+    /**
+     * JDK反射 性能接口较差
+     * @param beanDefinition
+     * @param beanName
+     * @param constructor
+     * @param args
+     * @return
+     */
     @Override
-    //JDK反射 性能接口较差
     public Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor constructor, Object[] args) {
         Class beanClass = beanDefinition.getBeanClass();
         try{

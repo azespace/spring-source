@@ -12,7 +12,14 @@ import java.lang.reflect.Constructor;
  * @date: 2023/4/1 13:19
  **/
 public class CglibInstantiationStrategy implements InstantiationStrategy {
-    //通过Cglib实例化 使用ASM字节码技术，比反射性能高很多
+    /**
+     * 通过Cglib实例化 使用ASM字节码技术，比反射性能高很多
+     * @param beanDefinition
+     * @param beanName
+     * @param constructor
+     * @param args
+     * @return
+     */
     @Override
     public Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor constructor, Object[] args) {
         //cglib库提供的类，通过生成子类动态创建代理对象 常见的代理模式，用于动态运行时为目标对象提供额外的功能
@@ -38,7 +45,9 @@ public class CglibInstantiationStrategy implements InstantiationStrategy {
 //            }
 //        });
         //创建无参数的对象
-        if (null ==constructor) return enhancer.create();
+        if (null ==constructor) {
+            return enhancer.create();
+        }
         //创建有参数的对象
         return enhancer.create(constructor.getParameterTypes(),args);
     }

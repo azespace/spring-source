@@ -1,12 +1,11 @@
 package com.xm.spring.step02.factory.config;
 
 /**
- * @description:
+ * @description: 换成class可以实现更多更强大的功能，也可以在需要实例化的时候再实例化
  * @author: 小明长高高
  * @date: 2023/3/27 22:26
  **/
 public class BeanDefinition {
-    //换成class可以将bean实例化的操作放入容器中处理，而不是实例化后放入容器。
     private Class beanClass;
     public BeanDefinition(Class beanClass){
         this.beanClass = beanClass;

@@ -8,8 +8,21 @@ import org.springframework.beans.BeansException;
  * @date: 2023/3/27 20:50
  **/
 public interface BeanFactory {
-    //Bean的获取 接口其实属于是给他一个规范
+    /**
+     * 无参数的Bean的获取
+     * @param beanName
+     * @return
+     * @throws BeansException
+     */
     Object getBean(String beanName) throws BeansException;
-    //有参数的Bean的获取
+
+    /**
+     * 有参数的Bean的获取
+     * @param name
+     * @param args
+     * @return
+     * @throws BeansException
+     * @throws NoSuchMethodException
+     */
     Object getBean(String name ,Object...args) throws BeansException, NoSuchMethodException;
 }

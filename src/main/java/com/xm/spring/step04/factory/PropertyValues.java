@@ -11,7 +11,9 @@ import java.util.List;
  * @date: 2023/4/1 15:09
  **/
 public class PropertyValues {
-    //用于给BeanDefinition用的，因为属性比较复杂而且多，很需要这个包装类。
+    /**
+     * 用于给BeanDefinition用的，因为属性比较复杂而且多，很需要这个包装类。
+     */
     private final List<PropertyValue> propertyValueList = new ArrayList<>();
     public void addPropertyValue(PropertyValue pv){
         this.propertyValueList.add(pv);

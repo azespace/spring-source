@@ -1,0 +1,16 @@
+package com.xm.spring.step06.beans;
+
+/**
+ * @description:
+ * @author: 小明长高高
+ * @date: 2023/3/27 22:23
+ **/
+public class BeanException extends RuntimeException{
+   public BeanException(String msg){
+       super(msg);
+   }
+    public BeanException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+
+}

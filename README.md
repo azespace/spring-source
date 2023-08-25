@@ -14,6 +14,8 @@
 - 加入开发者社区，参与讨论和互动
 - 找一位Java开发者作为你的导师
 
+> 以下笔记内容循序渐进，和代码对应，按照小傅哥的网站，从0开始编写spring源码，为了理解到位也参考了官方源码，每一步都有详细的注释,也可以直接食用免费的教程 [小傅哥的网站](https://bugstack.cn/)
+
 #### step01
 - 了解简单的spring容器的实现原理
 - bean由简单的object替代 后续bean的定义应该是class属性和其他一些复杂的属性
@@ -37,7 +39,7 @@
 - BeanDefinition开始增加属性了，本来只有class，现在增加了propertyValues，主要是完善实例化后没有给对象填充属性的问题
 - 还是在之前解耦的那个类AbstractAutowireCapableBeanFactory里面实现的，这个类的主要功能就是通过BeanDefinition创建对象并且放入单例bean容器中，目前实现了有参，无参构造实例化，并且给实例化后的对象填充属性的功能
 
-### step05
+#### step05
 ![img_1.png](docs/assets/img02.png)
 1. 这一步实现xml注册bean，首先要解析xml文件，就要先获取xml文件的字节流，然后根据属性获取对应的值，然后根据值去获取对应的类，然后将类注册到BeanDefinition容器中，然后将BeanDefinition容器注册到BeanFactory中，然后就可以通过BeanFactory获取对象了
 2. 我们只需要关注图片的左边哦，创建Resource接口获取资源，提供统一获取字节流的方法getInputStream,并提供三个实现类分别以不同方式获取
@@ -49,3 +51,39 @@
 5. 抽象类AbstractBeanDefinitionReader实现了BeanDefinitionReader接口，内部持有BeanDefinition注册器和ResourceLoader资源加载器(用于解析资源)，用于给子类统一提供注册器和加载器，同时提供了三个不同参数的解析资源的方法，这里的解析资源方法是抽象的，由子类实现，因为不同的资源解析方式不同
 6. XmlBeanDefinitionReader继承抽象类AbstractBeanDefinitionReader,实现了接口中的解析资源方法，真正提供了解析Xml文件的能力，并且通过内部持有的注册器将bean定义注册到BeanDefinition缓存池中，以及注册单例bean对象到单例bean对象容器中
 7. 这里多了几个类ConfigurableListableBeanFactory,AutowireCapableBeanFactory,HierarchicalBeanFactory等是后续用于配置功能的扩展，目前还没有实现，先不管
+
+#### step06
+![img.png](docs/assets/img03.png)
+1. 这一部主要是实现对bean的扩展，完成自定义功能，引入了BeanFactoryPostProcessor，BeanPostProcessor接口
+2. ApplicationContext继承了ListableBeanFactory接口拥有了BeanFactory的bean创建和获取以及生命周期能力和ListableBeanFactory的bean的清单的能力
+3. ConfigurableApplicationContext继续继承了ApplicationContext接口，目前拥有refresh刷新容器的能力，ApplicationContext无任何实现，接口细化为了方便解耦以及扩展
+4. AbstractApplicationContext继承DefaultResourceLoader拥有了解析资源的能力，实现了ConfigurableApplicationContext接口，实现了刷新容器的能力，并通过模板算法组装了刷新容器的流程，组装的步骤有一步是通过提供ConfigurableListableBeanFactory类型的BeanFactory的可配置工厂的清单bean工厂
+5. ConfigurableListableBeanFactory继承了三个bean工厂接口，ListableBeanFactory，AutowireCapableBeanFactory，ConfigurableBeanFactory，拥有了bean的清单，自动装配，配置的能力，同时提供了对bean的扩展能力，接口通过传入BeanPostProcessor参数，在bean初始化后做一些事情
+6. AbstractRefreshableApplicationContext继承了AbstractApplicationContext，他的内部提供了DefaultListableBeanFactory完全体工厂，提供了加载BeanDefinition的能力，由子类去实现具体的加载BeanDefinition的逻辑
+7. AbstractXmlApplicationContext继承了AbstractRefreshableApplicationContext，实现了加载BeanDefinition的逻辑，通过XmlBeanDefinitionReader去解析xml文件，然后将BeanDefinition注册到DefaultListableBeanFactory中，然后将DefaultListableBeanFactory注册到AbstractRefreshableApplicationContext中，然后调用AbstractRefreshableApplicationContext的refresh方法刷新容器，然后就可以通过AbstractRefreshableApplicationContext获取bean了
+8. ClassPathXmlApplicationContext继承了AbstractXmlApplicationContext，拥有解析xml文件的能力，通过XmlBeanDefinitionReader去解析xml文件，然后将BeanDefinition注册到DefaultListableBeanFactory中，然后将DefaultListableBeanFactory注册到AbstractRefreshableApplicationContext中，然后调用AbstractRefreshableApplicationContext的refresh方法刷新容器，然后就可以通过AbstractRefreshableApplicationContext获取bean了
+9. 结合测试案例test06可以发现，只需要传入配置文件不仅可以实现bean的注入，还可以对beanDefinition注入后做自定义事件，以及在实例化对象后再做自定义事件，全部自动化的，只需要你实现PostProcessor接口，并注入到容器中，就可以实现自定义事件，这就是spring的强大之处
+10. 从这一章开始代码变得特别复杂，spring的设计模式是教科书级别的，可以慢慢思考和理解，一通百通，前期比较难，后期无敌
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
